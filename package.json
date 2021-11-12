@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/cobalt-intelligence/puppeteer-stealth-on-lambda#readme",
   "dependencies": {
+    "@infosimples/node_two_captcha": "^1.1.0",
     "chrome-aws-lambda": "^10.1.0",
     "puppeteer-core": "^11.0.0",
     "puppeteer-extra": "^3.2.3",
