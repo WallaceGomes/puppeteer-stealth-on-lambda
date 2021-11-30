@@ -10,9 +10,9 @@ I have a neat script in the package.json that allows you to easily push to Lambd
 
 Then...just comment in the function you want to use and run it!
 
-[Video: Setting up Puppeteer Stealth on Lambda](https://www.youtube.com/watch?v=pkqIEv9i1KY)
-[Video: How to Solve reCaptchas with Puppeteer](https://www.youtube.com/watch?v=D52NjoZWn14)
-[Video: How to Solve Simple Captchas with Puppeteer](https://www.youtube.com/watch?v=r-ANFgW5Y3o)
+* [Video: Setting up Puppeteer Stealth on Lambda](https://www.youtube.com/watch?v=pkqIEv9i1KY)
+* [Video: How to Solve reCaptchas with Puppeteer](https://www.youtube.com/watch?v=D52NjoZWn14)
+* [Video: How to Solve Simple Captchas with Puppeteer](https://www.youtube.com/watch?v=r-ANFgW5Y3o)
 
 ### Prerequisites
 
