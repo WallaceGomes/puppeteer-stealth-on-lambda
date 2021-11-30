@@ -29,7 +29,7 @@ npm i
 ## Built With
 
 * [NodeJS](https://nodejs.org/en/) - NodeJS
-* [2Captcha](https://2captcha.com?from=7390140) - NodeJS
+* [2Captcha](https://2captcha.com?from=7390140) - 2Captcha
 * [puppeteer](https://github.com/puppeteer/puppeteer) - Headless browser
 * [puppeteer-extra](https://github.com/berstend/puppeteer-extra) - Amazing package for extra puppeteer plugins
 * [chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda) - Allows you to run Puppeteer on lambda
