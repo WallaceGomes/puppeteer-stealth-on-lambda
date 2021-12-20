@@ -2,6 +2,17 @@ import chromium from 'chrome-aws-lambda';
 import recaptcha from 'puppeteer-extra-plugin-recaptcha';
 import pluginStealth from 'puppeteer-extra-plugin-stealth';
 import { addExtra } from 'puppeteer-extra';
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRECT_KEY,
+});
+
+const s3 = new AWS.S3();
+const bucket = 'rpapuppeteerscreenshots';
+const prints = [];
+
 const USER_AGENT =
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36';
 
@@ -203,26 +214,28 @@ async function scrapLatam(user, pass, url) {
 		});
 	});
 
-    console.log(`Loading page...:${url}`);
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    console.log('Loading page...: https://www.pontosmultiplus.com.br/portal/');
 
-    await page.goto('https://latampass.latam.com/pt_br/');
+    await page.goto('https://www.pontosmultiplus.com.br/portal/', { waitUntil: 'networkidle2' });
 
-    await page.waitForSelector('#auth0-login');
-    await page.click('#auth0-login');
+    // await page.waitForSelector('#auth0-login');
+    // await page.click('#auth0-login');
     await page.waitForSelector('#form-input--alias');
-    console.log('type login');
+    console.log(`type login: ${user}`);
     await page.type('#form-input--alias', user, {
-        delay: 50,
+        delay: 100,
     });
     await page.waitForSelector('#form-input--password');
-    console.log('type password');
+    console.log(`type password: ${pass}`);
     await page.type('#form-input--password', pass, {
-        delay: 50,
+        delay: 100,
     });
-    // await page.waitForTimeout(90000);
+    await page.waitForTimeout(1000)
+    await page.solveRecaptchas();
     await page.click('#form-button--submit');
     console.log('click login');
+
+    await page.waitForTimeout(15000)
 
     // console.log(
     // 	'Loading page...:https://www.pontosmultiplus.com.br/portal/pages/home.html',
@@ -231,21 +244,34 @@ async function scrapLatam(user, pass, url) {
     // // console.log('EXP page...');
     // await page.goto(
     // 	'https://www.pontosmultiplus.com.br/portal/pages/home.html',
+    //     { waitUntil: 'networkidle2' }
     // );
 
-    await page.waitForSelector('#dropdownMenuButton');
-    console.log(
-        'Loading page...:https://www.pontosmultiplus.com.br/portal/pages/home.html',
-    );
+    const print = await page.screenshot();
+    const params = {
+        Bucket: bucket,
+        Key: `${(Math.random() * 10000).toFixed(0).toString()}.png`,
+        Body: print,
+    }
+    await s3.putObject(params).promise();
+    // await page.waitForSelector('#dropdownMenuButton');
+    // console.log(
+    //     'Loading page...:https://www.pontosmultiplus.com.br/portal/pages/home.html',
+    // );
+
+    // // console.log('EXP page...');
+    // await page.goto(
+    //     'https://www.pontosmultiplus.com.br/portal/pages/home.html',
+    // );
+
+    // await page.waitForSelector('a.header-account__my-account.small');
+    // await page.click('a.header-account__my-account.small');
 
     // console.log('EXP page...');
-    await page.goto(
-        'https://www.pontosmultiplus.com.br/portal/pages/home.html',
-    );
 
-    await page.waitForSelector('#info-box-points');
+    // await page.waitForSelector('#info-box-points');
 
-    await page.waitForTimeout(500);
+    // await page.waitForTimeout(500);
 
     return { miles: 'ok', expiryDate: 'ok' };
 }
