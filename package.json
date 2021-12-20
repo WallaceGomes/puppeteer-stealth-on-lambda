@@ -20,6 +20,7 @@
   "author": "Wallace Gomes",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1046.0",
     "chrome-aws-lambda": "^10.1.0",
     "puppeteer-core": "^11.0.0",
     "puppeteer-extra": "^3.2.3",
